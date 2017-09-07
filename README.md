@@ -1,28 +1,39 @@
-# Basic skeleton with Express app generator
+# Learning convox with a basic nodejs express app
 
-Generate and run a basic [Express](http://expressjs.com/) app. This step should be considered as starting point and is not (yet) suited for "real" development because there's not automatic restart on file changes. We'll get there in the following steps.
+This repo is about deploying apps to AWS via convox.
 
 ## Prerequisites
 
-Install [Docker](https://www.docker.com/) on your system.
-
-* [Install instructions](https://docs.docker.com/installation/mac/) for Mac OS X
-* [Install instructions](https://docs.docker.com/installation/ubuntulinux/) for Ubuntu Linux
-* [Install instructions](https://docs.docker.com/installation/) for other platforms
-
-Install [Docker Compose](http://docs.docker.com/compose/) on your system.
-
-* Python/pip: `sudo pip install -U docker-compose`
-* Other: ``curl -L https://github.com/docker/compose/releases/download/1.1.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose; chmod +x /usr/local/bin/docker-compose``
-
-## Setup
-
-1. Run `docker-compose build`. It will pull a base image from the Docker registry and install [express-generator](https://github.com/expressjs/generator) globally in your container. The rest can be ignored for now.
-
-2. Run `docker-compose run web express app`. This will bootstrap a new Express app in your container in the `app` subfolder. Since it already exists, Express will ask you if you want to override, which you can answer with `yes`.
-
-3. Run `docker-compose build` again. It will install install all dependencies from the (generated) package.json, expose port 3000 to the host, and instruct the container to execute `node app/bin/www` on start up.
+- Docker account + CLI: https://www.docker.com/
+- Convox account + CLI: https://convox.com/ (also do the quick start tutorial)
 
 ## Start
 
-Run `docker-compose up` to create and start the container. The app should then be running on your docker daemon on port 3030 (On OS X you can use `boot2docker ip` to find out the IP address).
+Start everything with docker-compose. This doesn't need to build anything:
+
+- run: `docker-compose up`or `convox start`
+- list: `docker-compose ps`
+- stop: `docker-compose stop`
+
+Sometimes docker-compose will work but the underlying docker build will not. This
+will result in a unsuccessful deployment, so make sure that your app always runs 
+with docker build and run: 
+
+- container build: `docker build -t learning-convox-nodejs .`
+- container run: `docker run learning-convox-nodejs`
+- container list: `docker ps`
+
+
+## Deploy with convox
+
+Create an account on convox.com and go through the quick start tutorial.
+
+- `convox switch <org>/<rack>`
+- `convox apps create `
+- `convox apps info` wait until status is _running_
+- `convox deploy`
+- `convox rack params set BuildMemory=512` if no-memory error rises
+
+If the app is deploy you can do:
+
+- `convox logs`
