@@ -1,13 +1,10 @@
-FROM node:0.10.38
-
-RUN mkdir /src
-
-RUN npm install express-generator -g
-
-WORKDIR /src
-ADD app/package.json /src/package.json
-RUN npm install
+FROM node:8
 
 EXPOSE 3000
+
+ADD app app
+WORKDIR /app
+
+RUN npm install
 
 CMD node app/bin/www
