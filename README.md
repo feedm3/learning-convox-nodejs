@@ -26,7 +26,8 @@ with docker build and run:
 
 ## Deploy with convox
 
-Create an account on convox.com and go through the quick start tutorial.
+Create an account on convox.com and go through the quick start tutorial. For the basic rack downgrading to _t2.micro_
+could save you some bucks so if you don't deploy power consuming apps you should do that.
 
 - `convox switch <org>/<rack>`
 - `convox apps create `
